@@ -20,8 +20,23 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"https://dev-api.builtinmedia.net/api/\""
+            )
+        }
+
         release {
             isMinifyEnabled = false
+
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"https://api.builtinmedia.net/api/\""
+            )
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -45,6 +61,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -75,4 +92,10 @@ dependencies {
     // Glide
     implementation(libs.glide.core)
     ksp(libs.glide.ksp)
+
+    //Either
+    implementation(libs.arrow.core)
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
 }
