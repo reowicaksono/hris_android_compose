@@ -24,7 +24,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://dev-api.builtinmedia.net/api/\""
+                "\"https://hris-stg.builtinmedia.net/api/\""
             )
         }
 
@@ -34,7 +34,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://api.builtinmedia.net/api/\""
+                "\"https://hris-stg.builtinmedia.net/api/\""
             )
 
             proguardFiles(
@@ -98,4 +98,6 @@ dependencies {
 
     // Datastore
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.compose.material.icons.extended)
 }

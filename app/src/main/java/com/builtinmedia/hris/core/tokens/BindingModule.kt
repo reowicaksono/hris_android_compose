@@ -12,4 +12,8 @@ abstract class BindingModule {
     @Binds
     @Singleton
     abstract fun bindTokenProvider(impl: TokenProviderImpl) : TokenProvider
+
+    @Binds
+    @Singleton
+    abstract  fun bindTokenRefresher(impl: TokenRefresherImpl): TokenRefresher
 }
