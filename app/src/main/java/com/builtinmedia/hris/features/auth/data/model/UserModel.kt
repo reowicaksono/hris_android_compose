@@ -15,12 +15,20 @@ data class UserModel(
 	val id: Int,
 
 	@field:SerializedName("email")
-	val email: String
+	val email: String,
+
+	@field: SerializedName("employee")
+	val employee: EmployeeModel? = null,
+
+	@field: SerializedName("company")
+	val company: CompanyModel? = null,
 )
 
 fun UserModel.toDomain(): UserEntities = UserEntities(
 	id = id,
 	name = name,
 	email = email,
-	role = role
+	role = role,
+	employee = employee?.toDomain(),
+	company = company?.toDomain()
 )

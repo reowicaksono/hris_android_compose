@@ -6,7 +6,7 @@ import com.builtinmedia.hris.core.network.mapping.safeApiCall
 import com.builtinmedia.hris.core.network.mapping.safeApiCallNoData
 import com.builtinmedia.hris.core.tokens.TokenProvider
 import com.builtinmedia.hris.features.auth.data.datasource.AuthRemoteDataSource
-import com.builtinmedia.hris.features.auth.data.model.LoginRequestModel
+import com.builtinmedia.hris.features.auth.data.dto.LoginRequest
 import com.builtinmedia.hris.features.auth.data.model.toDomain
 import com.builtinmedia.hris.features.auth.domain.entities.UserEntities
 import com.builtinmedia.hris.features.auth.domain.repositories.AuthRepositories
@@ -21,9 +21,9 @@ class AuthRepositoriesImpl @Inject constructor(
         password: String
     ): Either<ApiException, UserEntities> {
         val result = safeApiCall {
-            authRemote.login(LoginRequestModel(email, password))
+            authRemote.login(LoginRequest(email, password))
         }
-        return result.map { loginData->
+        return result.map { loginData ->
             tokenProvider.saveToken(loginData.token, loginData.token)
             loginData.user.toDomain()
         }
@@ -36,5 +36,9 @@ class AuthRepositoriesImpl @Inject constructor(
         }
         tokenProvider.clearTokens()
         return result
+    }
+
+    override suspend fun getDataUser(): Either<ApiException, UserEntities> {
+        return safeApiCall { authRemote.getUserData() }.map { it.toDomain() }
     }
 }

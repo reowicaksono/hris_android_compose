@@ -30,6 +30,8 @@ class TokenProviderImpl @Inject constructor(
 
     override fun getRefreshToken(): String? = cachedRefreshToken
 
+    override suspend fun getTokenorNull(): String? =  dataStore.data.first()[Constants.ACCESS_TOKEN]
+
     override fun saveToken(accessToken: String, refreshToken: String) {
         cachedAccessToken = accessToken
         cachedRefreshToken = refreshToken
