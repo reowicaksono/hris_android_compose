@@ -9,30 +9,50 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val lightColorScheme = lightColorScheme(
+    primary = HrisColors.Primary,
+    onPrimary = HrisColors.Surface,
+    primaryContainer = HrisColors.Sky,
+    onPrimaryContainer = HrisColors.PrimaryDark,
+    background = HrisColors.Background,
+    onBackground = HrisColors.TextPrimary,
+    surface = HrisColors.Surface,
+    onSurface = HrisColors.TextPrimary,
+    surfaceVariant = HrisColors.SkySoft,
+    onSurfaceVariant = HrisColors.TextSecondary,
+    outline = HrisColors.Border,
+    error = HrisColors.Error,
+    onError = HrisColors.Surface,
+    errorContainer = HrisColors.ErrorBg
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val darkColorScheme = darkColorScheme(
+    primary = HrisColors.PrimaryLight,
+    onPrimary = HrisColors.TextPrimary,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primaryContainer = HrisColors.PrimaryDark,
+    onPrimaryContainer = HrisColors.Sky,
+
+    background = HrisColors.DarkBackground,
+    onBackground = HrisColors.DarkTextPrimary,
+
+    surface = HrisColors.DarkSurface,
+    onSurface = HrisColors.DarkTextPrimary,
+
+    surfaceVariant = HrisColors.DarkSurfaceVariant,
+    onSurfaceVariant = HrisColors.DarkTextSecondary,
+
+    outline = HrisColors.DarkBorder,
+
+    error = HrisColors.ErrorLight,
+    onError = HrisColors.DarkTextPrimary,
+
+    errorContainer = HrisColors.ErrorDarkBg,
+    onErrorContainer = HrisColors.ErrorLight
 )
-
 @Composable
 fun HrisTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -46,13 +66,17 @@ fun HrisTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> darkColorScheme
+        else -> lightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing()
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
