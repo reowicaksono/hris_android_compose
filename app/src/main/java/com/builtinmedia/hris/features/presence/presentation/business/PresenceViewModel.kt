@@ -1,8 +1,7 @@
-package com.builtinmedia.hris.features.home.presentation.business
+package com.builtinmedia.hris.features.presence.presentation.business
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import arrow.core.Either
 import com.builtinmedia.hris.features.auth.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,22 +16,22 @@ import javax.inject.Inject
 
 
 //temporary create state and event with 1 file bcs doesnt overengineering
-data class HomeState(
+data class PresenceState(
     val isLoggingOut: Boolean = false,
 )
-sealed class HomeUiEvent {
-    data object NavigateToLogin: HomeUiEvent()
-    data class ShowSnackbar(val message: String): HomeUiEvent()
+sealed class PresenceUiEvent {
+    data object NavigateToLogin: PresenceUiEvent()
+    data class ShowSnackbar(val message: String): PresenceUiEvent()
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class PresenceViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(PresenceState())
+    val state: StateFlow<PresenceState> = _state.asStateFlow()
 
-    private val _uiEvent = Channel<HomeUiEvent>(Channel.BUFFERED)
+    private val _uiEvent = Channel<PresenceUiEvent>(Channel.BUFFERED)
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onLogoutClick(){
@@ -44,11 +43,11 @@ class HomeViewModel @Inject constructor(
             when (val result = logoutUseCase()){
                 is Either.Right -> {
                     _state.update { it.copy(isLoggingOut = false) }
-                    _uiEvent.send(HomeUiEvent.NavigateToLogin)
+                    _uiEvent.send(PresenceUiEvent.NavigateToLogin)
                 }
                 is Either.Left -> {
                     _state.update { it.copy(isLoggingOut = false) }
-                    _uiEvent.send(HomeUiEvent.NavigateToLogin)
+                    _uiEvent.send(PresenceUiEvent.NavigateToLogin)
                 }
             }
         }

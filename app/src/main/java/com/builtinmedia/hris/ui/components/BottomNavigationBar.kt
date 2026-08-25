@@ -1,6 +1,7 @@
 package com.builtinmedia.hris.ui.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -18,7 +19,7 @@ import com.builtinmedia.hris.ui.navigations.Screen
 fun BottomNavigationBar(navController: NavController) {
 
     val items = listOf(
-        Screen.Home,
+        Screen.Presence,
         Screen.LeaveRequest,
         Screen.Payslip,
         Screen.Profile
@@ -32,7 +33,7 @@ fun BottomNavigationBar(navController: NavController) {
             NavigationBarItem(
                 icon = {
                     when (screen) {
-                        Screen.Home -> Icon(Icons.Default.Home, contentDescription = "Home")
+                        Screen.Presence -> Icon(Icons.Default.Fingerprint, contentDescription = "Home")
                         Screen.LeaveRequest -> Icon(Icons.Default.ShoppingCart, contentDescription = "LeaveRequest")
                         Screen.Payslip -> Icon(Icons.Default.Person, contentDescription = "Payslip")
                         Screen.Profile -> Icon(Icons.Default.Person, contentDescription = "Profile")
@@ -41,7 +42,7 @@ fun BottomNavigationBar(navController: NavController) {
                 },
                 label = {
                     when (screen) {
-                        Screen.Home -> Text("Home")
+                        Screen.Presence -> Text("Presence")
                         Screen.LeaveRequest -> Text("LeaveRequest")
                         Screen.Payslip -> Text("Payslip")
                         Screen.Profile -> Text("Profile")
@@ -51,7 +52,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(Screen.Home.route) {
+                        popUpTo(Screen.Presence.route) {
                             saveState = true
                         }
                         launchSingleTop = true

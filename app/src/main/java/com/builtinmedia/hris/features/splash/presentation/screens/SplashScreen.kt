@@ -25,7 +25,7 @@ fun SplashScreen(
         splashViewModel.uiEvent.collectLatest { event ->
             val destination = when (event) {
                 SplashUiEvent.NavigateToLogin -> Screen.Login.route
-                SplashUiEvent.NavigateToHome -> Screen.Home.route
+                SplashUiEvent.NavigateToPresence -> Screen.Presence.route
             }
 
             navController.navigate(destination){

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 /*TEMPORARY CLASS SPLASH WITH SPLASH EVENT*/
 sealed interface SplashUiEvent{
-    data object NavigateToHome: SplashUiEvent
+    data object NavigateToPresence: SplashUiEvent
     data object NavigateToLogin: SplashUiEvent
 }
 
@@ -39,7 +39,7 @@ class SplashViewModel @Inject constructor(
             }
 
             when (getUserDataUseCase()){
-                is Either.Right -> _uiEvent.send(SplashUiEvent.NavigateToHome)
+                is Either.Right -> _uiEvent.send(SplashUiEvent.NavigateToPresence)
 
                 is Either.Left -> {
                     tokenProvider.clearTokens()

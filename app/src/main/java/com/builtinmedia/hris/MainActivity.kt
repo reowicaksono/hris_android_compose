@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
                val showBottomBar =
                    currentRoute in listOf(
-                       Screen.Home.route,
+                       Screen.Presence.route,
                        Screen.LeaveRequest.route,
                        Screen.Payslip.route,
                        Screen.Profile.route

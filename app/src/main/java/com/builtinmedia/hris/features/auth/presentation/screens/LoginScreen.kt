@@ -68,10 +68,11 @@ fun LoginScreen(
         viewModel.uiEvent.collectLatest { event ->
             when (event) {
                 AuthUiEvent.NavigateHome -> {
-                    navController.navigate(Screen.Home.route) {
+                    navController.navigate(Screen.Presence.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
+
                 is AuthUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(event.message)
             }
         }
@@ -87,6 +88,7 @@ fun LoginScreen(
                 .padding(innerPadding)
                 .padding(horizontal = spacing.space24)
                 .padding(top = spacing.space32),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Logo
             Box(
@@ -117,7 +119,7 @@ fun LoginScreen(
             Spacer(Modifier.height(spacing.space16))
             Text(
                 "Welcome back",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold,
             )
@@ -131,13 +133,18 @@ fun LoginScreen(
 
             Spacer(Modifier.height(spacing.space24))
 
-            Text("Email", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                "Email",
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
             Spacer(Modifier.height(spacing.space8))
             OutlinedTextField(
                 value = state.email,
                 onValueChange = { viewModel.onEvent(AuthEvent.EmailChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("reo@example.com") },
+                placeholder = { Text("user@gmail.com") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) },
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
@@ -145,11 +152,17 @@ fun LoginScreen(
 
             Spacer(Modifier.height(spacing.space16))
 
-            Text("Password", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                "Password",
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
             Spacer(Modifier.height(spacing.space8))
             OutlinedTextField(
                 value = state.password,
                 onValueChange = { viewModel.onEvent(AuthEvent.PasswordChanged(it)) },
+                placeholder = { Text("*********") },
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = null) },
                 trailingIcon = {

@@ -1,4 +1,4 @@
-package com.builtinmedia.hris.features.home.presentation.screens
+package com.builtinmedia.hris.features.presence.presentation.screens
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,35 +18,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.builtinmedia.hris.features.home.presentation.business.HomeUiEvent
-import com.builtinmedia.hris.features.home.presentation.business.HomeViewModel
+import com.builtinmedia.hris.features.presence.presentation.business.PresenceUiEvent
+import com.builtinmedia.hris.features.presence.presentation.business.PresenceViewModel
 import com.builtinmedia.hris.ui.navigations.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun HomeScreen(
+fun PresenceScreen(
     navController: NavController,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    presenceViewModel: PresenceViewModel = hiltViewModel()
 ) {
-    val state by homeViewModel.state.collectAsStateWithLifecycle()
+    val state by presenceViewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
-        homeViewModel.uiEvent.collectLatest { event ->
+        presenceViewModel.uiEvent.collectLatest { event ->
             when (event) {
-                HomeUiEvent.NavigateToLogin -> {
+                PresenceUiEvent.NavigateToLogin -> {
                     navController.navigate(Screen.Login.route){
                         popUpTo(0) { inclusive = true }
                     }
                 }
-                is HomeUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(event.message)
+                is PresenceUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(event.message)
             }
         }
     }
@@ -57,13 +55,13 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
         ){
             Text(
-                text = "Home",
+                text = "Presence",
                 modifier = Modifier.padding(innerPadding),
                 style = MaterialTheme.typography.headlineMedium
             )
 
             IconButton(
-                onClick = {homeViewModel.onLogoutClick()},
+                onClick = {presenceViewModel.onLogoutClick()},
                 enabled = !state.isLoggingOut
             ) {
                 if (state.isLoggingOut){

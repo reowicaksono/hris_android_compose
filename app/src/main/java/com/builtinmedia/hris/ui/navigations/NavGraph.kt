@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.builtinmedia.hris.features.auth.presentation.screens.LoginScreen
-import com.builtinmedia.hris.features.home.presentation.screens.HomeScreen
+import com.builtinmedia.hris.features.presence.presentation.screens.PresenceScreen
 import com.builtinmedia.hris.features.splash.presentation.screens.SplashScreen
 
 
@@ -22,8 +22,8 @@ fun NavGraph(navController: NavHostController) {
         composable(Screen.Login.route) {
             LoginScreen(navController = navController)
         }
-        composable(Screen.Home.route) {
-            HomeScreen(navController = navController)
+        composable(Screen.Presence.route) {
+            PresenceScreen(navController = navController)
         }
     }
 }
