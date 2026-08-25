@@ -1,11 +1,15 @@
 package com.builtinmedia.hris.core.errors
 
+import com.builtinmedia.hris.core.network.mapping.ApiResponseError
+import com.google.gson.Gson
 import okio.IOException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 object ErrorMapper {
+
+    private val gson = Gson()
     fun map(e: Exception): ApiException {
         return when (e) {
             is HttpException -> when (e.code()) {
@@ -24,7 +28,17 @@ object ErrorMapper {
 
     fun parseErrorMesage(e: HttpException): String? {
         return try {
-            e.response()?.errorBody()?.string()
+            val body = e.response()
+                ?.errorBody()
+                ?.string()
+                ?: return null
+
+            val response = gson.fromJson(
+                body,
+                ApiResponseError::class.java
+            )
+
+            response.message
         } catch (ex: Exception) {
             null
         }
