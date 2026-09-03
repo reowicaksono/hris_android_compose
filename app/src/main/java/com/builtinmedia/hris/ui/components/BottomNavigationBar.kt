@@ -19,7 +19,7 @@ import com.builtinmedia.hris.ui.navigations.Screen
 fun BottomNavigationBar(navController: NavController) {
 
     val items = listOf(
-        Screen.Presence,
+        Screen.Attendance,
         Screen.LeaveRequest,
         Screen.Payslip,
         Screen.Profile
@@ -33,7 +33,7 @@ fun BottomNavigationBar(navController: NavController) {
             NavigationBarItem(
                 icon = {
                     when (screen) {
-                        Screen.Presence -> Icon(Icons.Default.Fingerprint, contentDescription = "Home")
+                        Screen.Attendance -> Icon(Icons.Default.Fingerprint, contentDescription = "Home")
                         Screen.LeaveRequest -> Icon(Icons.Default.ShoppingCart, contentDescription = "LeaveRequest")
                         Screen.Payslip -> Icon(Icons.Default.Person, contentDescription = "Payslip")
                         Screen.Profile -> Icon(Icons.Default.Person, contentDescription = "Profile")
@@ -42,7 +42,7 @@ fun BottomNavigationBar(navController: NavController) {
                 },
                 label = {
                     when (screen) {
-                        Screen.Presence -> Text("Presence")
+                        Screen.Attendance -> Text("Attendance")
                         Screen.LeaveRequest -> Text("LeaveRequest")
                         Screen.Payslip -> Text("Payslip")
                         Screen.Profile -> Text("Profile")
@@ -52,7 +52,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(Screen.Presence.route) {
+                        popUpTo(Screen.Attendance.route) {
                             saveState = true
                         }
                         launchSingleTop = true

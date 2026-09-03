@@ -57,7 +57,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
+    onLoginSuccess : () -> Unit,
     viewModel: AuthViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -67,11 +67,7 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collectLatest { event ->
             when (event) {
-                AuthUiEvent.NavigateHome -> {
-                    navController.navigate(Screen.Presence.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
-                    }
-                }
+                AuthUiEvent.NavigateHome -> onLoginSuccess()
 
                 is AuthUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(event.message)
             }

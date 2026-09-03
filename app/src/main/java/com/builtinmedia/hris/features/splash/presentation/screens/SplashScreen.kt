@@ -18,19 +18,17 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
+    onNavigateLogin : () -> Unit,
+    onNavigateAttendance: () -> Unit,
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
         splashViewModel.uiEvent.collectLatest { event ->
-            val destination = when (event) {
-                SplashUiEvent.NavigateToLogin -> Screen.Login.route
-                SplashUiEvent.NavigateToPresence -> Screen.Presence.route
+            when (event) {
+                SplashUiEvent.NavigateToLogin -> onNavigateLogin()
+                SplashUiEvent.NavigateToPresence -> onNavigateAttendance()
             }
 
-            navController.navigate(destination){
-                popUpTo(Screen.Splash.route) { inclusive = true }
-            }
         }
     }
 

@@ -5,8 +5,8 @@ import androidx.navigation.compose.composable
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.builtinmedia.hris.features.attendance.presentation.screens.AttendanceScreen
 import com.builtinmedia.hris.features.auth.presentation.screens.LoginScreen
-import com.builtinmedia.hris.features.presence.presentation.screens.PresenceScreen
 import com.builtinmedia.hris.features.splash.presentation.screens.SplashScreen
 
 
@@ -17,13 +17,33 @@ fun NavGraph(navController: NavHostController) {
         startDestination = Screen.Splash.route
     ) {
         composable(Screen.Splash.route) {
-            SplashScreen(navController = navController)
+            SplashScreen(
+                onNavigateLogin = {
+                    navController.navigate(Screen.Login.route){
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                },
+                onNavigateAttendance = {
+                    navController.navigate(Screen.Attendance.route){
+                        popUpTo(Screen.Attendance.route) { inclusive = true }
+                    }
+                },
+            )
         }
         composable(Screen.Login.route) {
-            LoginScreen(navController = navController)
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Screen.Attendance.route){
+                        popUpTo(Screen.Attendance.route) { inclusive = true }
+                    }
+                }
+            )
         }
-        composable(Screen.Presence.route) {
-            PresenceScreen(navController = navController)
+        composable(Screen.Attendance.route) {
+            AttendanceScreen(
+                onOpenHistory = {},
+                onOpenNotification = {}
+            )
         }
     }
 }
